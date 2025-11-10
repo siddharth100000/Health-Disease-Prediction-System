@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 import os
 
-# --- Load the saved model ---
+
 model_path = "model/health_model.pkl"
 
 if not os.path.exists(model_path):
@@ -12,11 +12,11 @@ else:
     with open(model_path, "rb") as file:
         model = pickle.load(file)
 
-    # --- App Title and Description ---
+    
     st.title("🩺 Health Detection System")
     st.write("This system predicts your risk of diabetes based on key health parameters.")
 
-    # --- User Input Section ---
+    
     pregnancies = st.number_input("Pregnancies", 0, 20, 1)
     glucose = st.slider("Glucose Level", 0, 200, 110)
     blood_pressure = st.slider("Blood Pressure", 0, 122, 70)
@@ -26,17 +26,17 @@ else:
     diabetes_pedigree = st.slider("Diabetes Pedigree Function", 0.0, 2.5, 0.5)
     age = st.number_input("Age", 1, 120, 25)
 
-    # --- Prediction Button ---
+  
     if st.button("Predict"):
-        # Convert inputs into numpy array
+       
         input_data = np.array([[pregnancies, glucose, blood_pressure, skin_thickness,
                                 insulin, bmi, diabetes_pedigree, age]])
 
-        # Make prediction
+        
         prediction = model.predict(input_data)
 
-        # --- Show Result ---
         if prediction[0] == 1:
             st.error("⚠ The person is likely to have diabetes.")
         else:
+
             st.success("✅ The person is unlikely to have diabetes.")
